@@ -10,7 +10,7 @@ Feel free to modify the project as you wish.
 
 Please also explain how you would test your code base and make sure that the application is behaving as expected.
 
-### Included depedencies:
+### Included dependencies
 - Retrofit
 - RxJava & RxAndroid
 

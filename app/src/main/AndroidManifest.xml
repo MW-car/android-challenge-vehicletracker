@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VehicleTracker">
-        <activity android:name="com.vimcar.vehicletracker.MainActivity">
+        <activity android:name="com.vimcar.vehicletracker.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

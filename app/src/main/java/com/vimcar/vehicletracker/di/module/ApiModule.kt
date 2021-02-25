@@ -2,14 +2,15 @@ package com.vimcar.vehicletracker.di.module
 
 import com.squareup.moshi.Moshi
 import com.vimcar.vehicletracker.BuildConfig
-import com.vimcar.vehicletracker.data.remote.model.ISODateJsonAdapter
 import com.vimcar.vehicletracker.data.remote.api.VehicleApi
+import com.vimcar.vehicletracker.data.remote.model.ISODateJsonAdapter
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.time.LocalDateTime
 import javax.inject.Singleton
@@ -52,6 +53,7 @@ object ApiModule {
         return Retrofit.Builder()
             .baseUrl(API_BASE_URL)
             .addConverterFactory(converterFactory)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
     }

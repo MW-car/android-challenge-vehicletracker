@@ -33,7 +33,7 @@ class VehicleOverviewViewModelTest {
         val captor = argumentCaptor<VehiclesViewState>()
         val observer: Observer<VehiclesViewState> = mock()
 
-        viewModel.vehicles.observeForever(observer)
+        viewModel.vehiclesOverViewViewState.observeForever(observer)
         viewModel.loadVehicles()
 
         verify(loadVehiclesUseCase).invoke()
@@ -43,7 +43,7 @@ class VehicleOverviewViewModelTest {
         assertEquals(VehiclesViewState.Loading, values[0])
         assertEquals(VehiclesViewState.Success(expectedVehiclesList), values[1])
 
-        viewModel.vehicles.removeObserver(observer)
+        viewModel.vehiclesOverViewViewState.removeObserver(observer)
     }
 
     @Test
@@ -58,7 +58,7 @@ class VehicleOverviewViewModelTest {
         val captor = argumentCaptor<VehiclesViewState>()
         val observer: Observer<VehiclesViewState> = mock()
 
-        viewModel.vehicles.observeForever(observer)
+        viewModel.vehiclesOverViewViewState.observeForever(observer)
         viewModel.loadVehicles()
 
         verify(loadVehiclesUseCase).invoke()
@@ -68,7 +68,7 @@ class VehicleOverviewViewModelTest {
         assertEquals(VehiclesViewState.Loading, values[0])
         assertEquals(VehiclesViewState.Error, values[1])
 
-        viewModel.vehicles.removeObserver(observer)
+        viewModel.vehiclesOverViewViewState.removeObserver(observer)
     }
 
     @Test
@@ -87,7 +87,7 @@ class VehicleOverviewViewModelTest {
         val captor = argumentCaptor<VehiclesViewState>()
         val observer: Observer<VehiclesViewState> = mock()
 
-        viewModel.vehicles.observeForever(observer)
+        viewModel.vehiclesOverViewViewState.observeForever(observer)
         viewModel.loadVehicles()
         viewModel.refreshVehicles()
 
@@ -100,6 +100,6 @@ class VehicleOverviewViewModelTest {
         assertEquals(VehiclesViewState.Loading, values[2])
         assertEquals(VehiclesViewState.Success(expectedVehiclesList2), values[3])
 
-        viewModel.vehicles.removeObserver(observer)
+        viewModel.vehiclesOverViewViewState.removeObserver(observer)
     }
 }

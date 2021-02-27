@@ -14,7 +14,7 @@ data class VehicleResponse(
     val brand: String,
     @Json(name = "model")
     val model: String,
-    @Json(name = "nickName")
+    @Json(name = "nickname")
     val nickName: String? = null,
     @Json(name = "last_position")
     val lastPosition: LastPosition

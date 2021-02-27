@@ -17,8 +17,8 @@ private const val LONGITUDE1 = 10.059922
 
 private const val ID2 = 2
 private const val LICENSE_PLATE2 = "456"
-private const val BRAND2 = "VW"
-private const val MODEL2 = "GOLF"
+private const val BRAND2 = "Audi"
+private const val MODEL2 = "A8"
 private const val NICKNAME2 = "My favorite car"
 private val date2 = LocalDateTime.of(2021, 2, 26, 20, 25)
 private const val LATITUDE2 = 43.485186

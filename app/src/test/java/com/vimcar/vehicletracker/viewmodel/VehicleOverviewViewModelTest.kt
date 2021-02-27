@@ -33,7 +33,7 @@ class VehicleOverviewViewModelTest {
         val captor = argumentCaptor<VehiclesViewState>()
         val observer: Observer<VehiclesViewState> = mock()
 
-        viewModel.vehicles.observeForever(observer)
+        viewModel.vehiclesOverViewViewState.observeForever(observer)
         viewModel.loadVehicles()
 
         verify(loadVehiclesUseCase).invoke()
@@ -43,7 +43,7 @@ class VehicleOverviewViewModelTest {
         assertEquals(VehiclesViewState.Loading, values[0])
         assertEquals(VehiclesViewState.Success(expectedVehiclesList), values[1])
 
-        viewModel.vehicles.removeObserver(observer)
+        viewModel.vehiclesOverViewViewState.removeObserver(observer)
     }
 
     @Test
@@ -58,7 +58,7 @@ class VehicleOverviewViewModelTest {
         val captor = argumentCaptor<VehiclesViewState>()
         val observer: Observer<VehiclesViewState> = mock()
 
-        viewModel.vehicles.observeForever(observer)
+        viewModel.vehiclesOverViewViewState.observeForever(observer)
         viewModel.loadVehicles()
 
         verify(loadVehiclesUseCase).invoke()
@@ -68,6 +68,38 @@ class VehicleOverviewViewModelTest {
         assertEquals(VehiclesViewState.Loading, values[0])
         assertEquals(VehiclesViewState.Error, values[1])
 
-        viewModel.vehicles.removeObserver(observer)
+        viewModel.vehiclesOverViewViewState.removeObserver(observer)
+    }
+
+    @Test
+    fun `when refreshed should load data`() {
+        val expectedVehiclesList1 = vehiclesList
+        val expectedVehiclesList2 = vehiclesList + vehiclesList[0]
+        whenever(loadVehiclesUseCase())
+            .thenReturn(Single.just(expectedVehiclesList1))
+            .thenReturn(Single.just(expectedVehiclesList2))
+
+        val viewModel = VehicleOverviewViewModel(
+            loadVehiclesUseCase = loadVehiclesUseCase,
+            reactiveTransformer = reactiveTransformer
+        )
+
+        val captor = argumentCaptor<VehiclesViewState>()
+        val observer: Observer<VehiclesViewState> = mock()
+
+        viewModel.vehiclesOverViewViewState.observeForever(observer)
+        viewModel.loadVehicles()
+        viewModel.refreshVehicles()
+
+        verify(loadVehiclesUseCase, times(2)).invoke()
+        verify(observer, times(4)).onChanged(captor.capture())
+
+        val values = captor.allValues
+        assertEquals(VehiclesViewState.Loading, values[0])
+        assertEquals(VehiclesViewState.Success(expectedVehiclesList1), values[1])
+        assertEquals(VehiclesViewState.Loading, values[2])
+        assertEquals(VehiclesViewState.Success(expectedVehiclesList2), values[3])
+
+        viewModel.vehiclesOverViewViewState.removeObserver(observer)
     }
 }

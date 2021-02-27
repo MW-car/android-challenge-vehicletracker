@@ -1,29 +1,45 @@
 package com.vimcar.vehicletracker.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.vimcar.vehicletracker.R
+import com.vimcar.vehicletracker.databinding.ListItemVehicleBinding
 import com.vimcar.vehicletracker.domain.model.Vehicle
 
 class VehiclesAdapter :
     ListAdapter<Vehicle, VehiclesAdapter.VehicleViewHolder>(VehicleViewItemDiffCallback) {
 
-    class VehicleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class VehicleViewHolder(private val viewBinding: ListItemVehicleBinding) :
+        RecyclerView.ViewHolder(viewBinding.root) {
 
         fun bind(vehicle: Vehicle) {
-            view.findViewById<TextView>(R.id.txt).text = vehicle.model
+            viewBinding.apply {
+                licensePlateTextView.text = vehicle.licensePlate
+                carTextView.text = carTextView.context.getString(
+                    R.string.car_brand_model,
+                    vehicle.brand,
+                    vehicle.model
+                )
+                nicknameTextView.text = if (vehicle.nickname.isNullOrEmpty()) {
+                    ""
+                } else {
+                    vehicle.nickname
+                }
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_vehicle, parent, false)
-        return VehicleViewHolder(view)
+        return VehicleViewHolder(
+            ListItemVehicleBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: VehicleViewHolder, position: Int) {

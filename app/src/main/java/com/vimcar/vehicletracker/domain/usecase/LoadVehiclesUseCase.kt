@@ -7,5 +7,9 @@ import javax.inject.Inject
 
 class LoadVehiclesUseCase @Inject constructor(private val repository: VehiclesRepository) {
 
-    operator fun invoke(): Single<List<Vehicle>> = repository.getVehicles()
+    operator fun invoke(): Single<List<Vehicle>> {
+        return repository.getVehicles().map { vehicles ->
+            vehicles.sortedWith(compareBy({ it.brand }, { it.model }))
+        }
+    }
 }

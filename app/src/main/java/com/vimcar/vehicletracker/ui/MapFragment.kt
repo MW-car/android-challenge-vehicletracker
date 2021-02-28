@@ -84,7 +84,7 @@ class MapFragment : Fragment() {
             vehicles
                 .map { createMarker(it) }
                 .forEach {
-                    addMarker(it)
+                    addedMarkers.add(addMarker(it))
                 }
         }
 

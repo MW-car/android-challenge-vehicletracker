@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.vimcar.vehicletracker.R
 import com.vimcar.vehicletracker.databinding.FragmentVehicleOverviewBinding
 import com.vimcar.vehicletracker.di.component.DaggerVehicleOverViewComponent
+import com.vimcar.vehicletracker.domain.model.Vehicle
 import com.vimcar.vehicletracker.ui.adapter.VehiclesAdapter
 import com.vimcar.vehicletracker.viewmodel.VehicleOverviewViewModel
 import com.vimcar.vehicletracker.viewmodel.VehiclesViewState
@@ -23,12 +24,22 @@ class VehicleOverviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
     private val viewModel: VehicleOverviewViewModel by viewModels { viewModelProviderFactory }
+
     private var viewBinding: FragmentVehicleOverviewBinding? = null
-    private val adapter = VehiclesAdapter()
+    private lateinit var onVehicleClickListener: OnVehicleClickListener
+
+    private val adapter = VehiclesAdapter { vehicle ->
+        onVehicleClickListener.onVehicleClick(vehicle)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         DaggerVehicleOverViewComponent.factory().create().inject(this)
+        if (activity is OnVehicleClickListener) {
+            onVehicleClickListener = activity as OnVehicleClickListener
+        } else {
+            throw IllegalStateException("Activity must implement OnVehicleClickListener")
+        }
     }
 
     override fun onCreateView(
@@ -90,5 +101,14 @@ class VehicleOverviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener
     override fun onRefresh() {
         adapter.submitList(emptyList())
         viewModel.refreshVehicles()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
+    }
+
+    interface OnVehicleClickListener {
+        fun onVehicleClick(vehicle: Vehicle)
     }
 }

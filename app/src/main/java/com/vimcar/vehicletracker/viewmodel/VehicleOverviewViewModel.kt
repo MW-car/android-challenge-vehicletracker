@@ -19,6 +19,7 @@ class VehicleOverviewViewModel @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     private var _vehicles = MutableLiveData<VehiclesViewState>()
+    // TODO this will still be fired by the mediator, just kept it for further enhancement
     private var _error = SingleLiveEvent<VehiclesViewState>()
 
     val vehiclesOverViewViewState = MediatorLiveData<VehiclesViewState>().apply {

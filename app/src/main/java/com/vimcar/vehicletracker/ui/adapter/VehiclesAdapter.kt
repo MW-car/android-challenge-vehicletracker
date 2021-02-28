@@ -9,14 +9,18 @@ import com.vimcar.vehicletracker.R
 import com.vimcar.vehicletracker.databinding.ListItemVehicleBinding
 import com.vimcar.vehicletracker.domain.model.Vehicle
 
-class VehiclesAdapter :
+class VehiclesAdapter(private val onVehicleClickListener: (Vehicle) -> Unit) :
     ListAdapter<Vehicle, VehiclesAdapter.VehicleViewHolder>(VehicleViewItemDiffCallback) {
 
-    class VehicleViewHolder(private val viewBinding: ListItemVehicleBinding) :
+    class VehicleViewHolder(
+        private val viewBinding: ListItemVehicleBinding,
+        private val onVehicleClickListener: (Vehicle) -> Unit
+    ) :
         RecyclerView.ViewHolder(viewBinding.root) {
 
         fun bind(vehicle: Vehicle) {
             viewBinding.apply {
+                root.setOnClickListener { onVehicleClickListener(vehicle) }
                 licensePlateTextView.text = vehicle.licensePlate
                 carTextView.text = carTextView.context.getString(
                     R.string.car_brand_model,
@@ -34,11 +38,12 @@ class VehiclesAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleViewHolder {
         return VehicleViewHolder(
-            ListItemVehicleBinding.inflate(
+            viewBinding = ListItemVehicleBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            onVehicleClickListener = onVehicleClickListener
         )
     }
 

@@ -5,4 +5,5 @@
     <string name="car_brand_model">%s - %s</string>
     <string name="error_message">Something wrong happened</string>
     <string name="error_snackbar_action">Retry</string>
+    <string name="recenter_map">Recenter map</string>
 </resources>

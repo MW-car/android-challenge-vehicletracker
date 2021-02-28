@@ -25,7 +25,7 @@ class VehiclesMapViewModel @Inject constructor(
     val selectedVehicleLocation = SingleLiveEvent<VehicleLastPosition>()
     private var selectedVehicleLastPosition: VehicleLastPosition? = null
 
-    private var _error = SingleLiveEvent<VehiclesViewState>()
+    val error = SingleLiveEvent<VehiclesViewState>()
 
 
     fun loadVehicles() {
@@ -35,8 +35,8 @@ class VehiclesMapViewModel @Inject constructor(
                     .compose(reactiveTransformer.ioSingleTransformer())
                     .subscribeBy(
                         onError = {
-                            // TODO handle error state properly
-                            _error.postValue(VehiclesViewState.Error)
+                            // TODO handle error state properly, Error here can be a separate type
+                            error.postValue(VehiclesViewState.Error)
                         },
                         onSuccess = { vehicles ->
                             _vehicles.postValue(vehicles)

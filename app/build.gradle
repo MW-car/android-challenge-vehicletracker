@@ -51,6 +51,7 @@ ext {
     mockito_kotlin_version = "2.1.0"
     assertj_version = "3.11.1"
     swipe_refresh_version = "1.1.0"
+    google_maps_version = "17.0.0"
 }
 
 dependencies {
@@ -95,6 +96,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // maps
+    implementation "com.google.android.gms:play-services-maps:$google_maps_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"

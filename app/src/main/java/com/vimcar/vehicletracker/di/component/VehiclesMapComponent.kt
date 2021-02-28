@@ -1,9 +1,11 @@
 package com.vimcar.vehicletracker.di.component
 
 import com.vimcar.vehicletracker.di.module.*
-import com.vimcar.vehicletracker.ui.VehicleOverviewFragment
+import com.vimcar.vehicletracker.ui.MapFragment
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
+
 
 @Singleton
 @Component(
@@ -13,15 +15,18 @@ import javax.inject.Singleton
         RepositoryModule::class,
         CacheModule::class,
         ViewModelsCreatorFactoryModule::class,
-        VehicleOverviewViewModelBindingModule::class
+        VehiclesMapViewModelBindingModule::class
     ]
 )
-interface VehicleOverViewComponent {
+interface VehiclesMapComponent {
 
-    fun inject(fragment: VehicleOverviewFragment)
+    fun inject(fragment: MapFragment)
 
     @Component.Factory
     interface Factory {
-        fun create(): VehicleOverViewComponent
+        fun create(
+            @BindsInstance
+            selectedCarId: Int
+        ): VehiclesMapComponent
     }
 }

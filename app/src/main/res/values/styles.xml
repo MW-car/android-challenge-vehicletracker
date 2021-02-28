@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LicensePlateStyle" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CarStyle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="NicknameStyle" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+</resources>
